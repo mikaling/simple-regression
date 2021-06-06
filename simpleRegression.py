@@ -2,10 +2,10 @@ from numpy import random, polyfit
 import matplotlib.pyplot as plt
 
 # target: office prices
-y = random.normal(50000, 15000, 100)
+y = random.normal(50000, 10000, 100)
 
 # feature: office sizes
-x = random.normal(120, 50, 100)
+x = random.normal(120, 25, 100)
 
 # learned values after gradient descent
 gradient = 0
@@ -56,8 +56,8 @@ def partial_derivative_c(x, y, y_hat, n):
 def gradient_descent(x, y, learning_rate, epochs):
     
     # starting with arbitrary values of m and c
-    m = 12
-    c = 500
+    m = 120
+    c = 18000
 
     # number of samples
     n = len(x)
@@ -71,13 +71,14 @@ def gradient_descent(x, y, learning_rate, epochs):
         # list of predictions
         y_hat = []
         for j in range(n):
-            y_hat.append(m * x[j] + c)
+            pred = (m * x[j]) + c
+            y_hat.append(pred)
     
         # print('=======Y_HAT AT EPOCH ' + str(i) + '=======\n' + str(y_hat))
         # get MSE
         mse = mean_squared_error(y, y_hat, n)
         mse_list.append(mse)
-        print('MSE at epoch ' + str(i) + ' = ' + str(mse[i]))
+        print('MSE at epoch ' + str(i) + ' = ' + str(mse_list[i]))
 
         # adjust m and c
         m = m - learning_rate * partial_derivative_m(x, y, y_hat, n) # new m
@@ -90,18 +91,14 @@ def gradient_descent(x, y, learning_rate, epochs):
 
         global y_intercept
         y_intercept = c
+    
+    plot(x, y_hat)
 
 def plot(x, y_hat):
 
-    # m, c = polyfit(x, y, 1)
-    # print(str(m) + ', ' + str(c))
-    # plt.plot(x, y, 'o')
-    # plt.plot(x, m * x + c)
     plt.scatter(x, y_hat)
     plt.plot([min(x), max(x)], [min(y_hat), max(y_hat)], color='red')
-    plt.show()
-
-# plot(x, y)
+    # plt.show()
 
 def predict(office_size):
     gradient_descent(x, y, 0.0001, 10)
@@ -110,5 +107,5 @@ def predict(office_size):
     office_price = gradient * office_size + y_intercept
     print('Office Price: ' + str(office_price))
 
-# gradient_descent(x, y, 0.003, 50)
+gradient_descent(x, y, 0.0003, 10)
 # predict(100)
