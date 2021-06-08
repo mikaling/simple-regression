@@ -108,7 +108,7 @@ def plot(x, y_hat):
     plt.show()
 
 def predict(office_size):
-    gradient_descent(x, y, lr, 10)
+    gradient_descent(x, y, lr, ep)
     global gradient
     global y_intercept
     office_price = gradient * office_size + y_intercept
