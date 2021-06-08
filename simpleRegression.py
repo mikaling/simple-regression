@@ -1,11 +1,13 @@
-from numpy import random, polyfit
+from numpy import random, sort
 import matplotlib.pyplot as plt
 
 # target: office prices
 y = random.normal(50000, 10000, 100)
+y = sort(y)
 
 # feature: office sizes
 x = random.normal(120, 25, 100)
+x = sort(x)
 
 # learned values after gradient descent
 gradient = 0
@@ -73,6 +75,8 @@ def gradient_descent(x, y, learning_rate, epochs):
         for j in range(n):
             pred = (m * x[j]) + c
             y_hat.append(pred)
+        
+        y_hat = sort(y_hat)
     
         # print('=======Y_HAT AT EPOCH ' + str(i) + '=======\n' + str(y_hat))
         # get MSE
@@ -92,13 +96,13 @@ def gradient_descent(x, y, learning_rate, epochs):
         global y_intercept
         y_intercept = c
     
-    plot(x, y_hat)
+    # plot(x, y_hat)
 
 def plot(x, y_hat):
 
     plt.scatter(x, y_hat)
     plt.plot([min(x), max(x)], [min(y_hat), max(y_hat)], color='red')
-    # plt.show()
+    plt.show()
 
 def predict(office_size):
     gradient_descent(x, y, 0.0001, 10)
