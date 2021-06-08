@@ -13,6 +13,9 @@ x = sort(x)
 gradient = 0
 y_intercept = 0
 
+lr = 0.0000000001 # learning rate
+ep = 5000 # epochs
+
 def mean_squared_error(y, y_hat, n):
 
     squared_errors_sum = 0
@@ -105,11 +108,11 @@ def plot(x, y_hat):
     plt.show()
 
 def predict(office_size):
-    gradient_descent(x, y, 0.0001, 10)
+    gradient_descent(x, y, lr, 10)
     global gradient
     global y_intercept
     office_price = gradient * office_size + y_intercept
     print('Office Price: ' + str(office_price))
 
-gradient_descent(x, y, 0.0003, 10)
-# predict(100)
+gradient_descent(x, y, lr, ep)
+predict(100)
